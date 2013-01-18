@@ -22,11 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -73,7 +69,7 @@ public class DeckTask extends
 	public static final int TASK_TYPE_CHECK_DATABASE = 14;
 	public static final int TASK_TYPE_DELETE_BACKUPS = 16;
 	public static final int TASK_TYPE_RESTORE_DECK = 17;
-	public static final int TASK_TYPE_UPDATE_CARD_BROWSER_LIST = 18;
+//	public static final int TASK_TYPE_UPDATE_CARD_BROWSER_LIST = 18;
 	public static final int TASK_TYPE_LOAD_TUTORIAL = 19;
 	public static final int TASK_TYPE_REPAIR_DECK = 20;
 	public static final int TASK_TYPE_CLOSE_DECK = 21;
@@ -219,8 +215,8 @@ public class DeckTask extends
 		case TASK_TYPE_RESTORE_DECK:
 			return doInBackgroundRestoreDeck(params);
 
-		case TASK_TYPE_UPDATE_CARD_BROWSER_LIST:
-			return doInBackgroundUpdateCardBrowserList(params);
+//		case TASK_TYPE_UPDATE_CARD_BROWSER_LIST:
+//			return doInBackgroundUpdateCardBrowserList(params);
 
 		case TASK_TYPE_LOAD_TUTORIAL:
 			return doInBackgroundLoadTutorial(params);
@@ -932,31 +928,31 @@ public class DeckTask extends
 		 return new TaskData(BackupManager.restoreBackup((String)data[1], (String)data[2]));
 	}
 
-	private TaskData doInBackgroundUpdateCardBrowserList(TaskData... params) {
-		Log.i(AnkiDroidApp.TAG, "doInBackgroundSortCards");
-		if (params.length == 1) {
-			Comparator comparator = params[0].getComparator();
-			ArrayList<HashMap<String, String>> card = params[0].getCards();
-			Collections.sort(card, comparator);
-		} else {
-			ArrayList<HashMap<String, String>> allCard = params[0].getCards();
-			ArrayList<HashMap<String, String>> cards = params[1].getCards();
-			cards.clear();
-			HashSet<String> tags = new HashSet<String>();
-			for (String s : (HashSet<String>) params[2].getObjArray()[0]) {
-				tags.add(s.toLowerCase());
-			}
-			for (int i = 0; i < allCard.size(); i++) {
-				HashMap<String, String> card = allCard.get(i);
-				if (Arrays.asList(
-						card.get("tags").toLowerCase().trim().split("\\s"))
-						.containsAll(tags)) {
-					cards.add(allCard.get(i));
-				}
-			}
-		}
-		return null;
-	}
+//	private TaskData doInBackgroundUpdateCardBrowserList(TaskData... params) {
+//		Log.i(AnkiDroidApp.TAG, "doInBackgroundSortCards");
+//		if (params.length == 1) {
+//			Comparator comparator = params[0].getComparator();
+//			ArrayList<HashMap<String, String>> card = params[0].getCards();
+//			Collections.sort(card, comparator);
+//		} else {
+//			ArrayList<HashMap<String, String>> allCard = params[0].getCards();
+//			ArrayList<HashMap<String, String>> cards = params[1].getCards();
+//			cards.clear();
+//			HashSet<String> tags = new HashSet<String>();
+//			for (String s : (HashSet<String>) params[2].getObjArray()[0]) {
+//				tags.add(s.toLowerCase());
+//			}
+//			for (int i = 0; i < allCard.size(); i++) {
+//				HashMap<String, String> card = allCard.get(i);
+//				if (Arrays.asList(
+//						card.get("tags").toLowerCase().trim().split("\\s"))
+//						.containsAll(tags)) {
+//					cards.add(allCard.get(i));
+//				}
+//			}
+//		}
+//		return null;
+//	}
 
 	private TaskData doInBackgroundLoadTutorial(TaskData... params) {
 		Log.i(AnkiDroidApp.TAG, "doInBackgroundLoadTutorial");
@@ -1065,7 +1061,7 @@ public class DeckTask extends
 		private long mLong;
 		private Context mContext;
 		private int mType;
-		private Comparator mComparator;
+//		private Comparator mComparator;
 		private int[] mIntList;
 		private Collection mCol;
 		private Sched mSched;
@@ -1118,11 +1114,11 @@ public class DeckTask extends
 			mCards = cards;
 		}
 
-		public TaskData(ArrayList<HashMap<String, String>> cards,
-				Comparator comparator) {
-			mCards = cards;
-			mComparator = comparator;
-		}
+//		public TaskData(ArrayList<HashMap<String, String>> cards,
+//				Comparator comparator) {
+//			mCards = cards;
+//			mComparator = comparator;
+//		}
 
 		public TaskData(boolean bool) {
 			mBool = bool;
@@ -1238,9 +1234,9 @@ public class DeckTask extends
             mCards = cards;
         }
 
-		public Comparator getComparator() {
-			return mComparator;
-		}
+//		public Comparator getComparator() {
+//			return mComparator;
+//		}
 
 		public Card getCard() {
 			return mCard;
