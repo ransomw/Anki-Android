@@ -36,6 +36,7 @@ import com.ichi2.anki.BackupManager;
 import com.ichi2.anki.R;
 import com.ichi2.libanki.Card;
 import com.ichi2.libanki.Collection;
+import com.ichi2.libanki.Models;
 import com.ichi2.libanki.Note;
 import com.ichi2.libanki.Sched;
 import com.ichi2.libanki.Stats;
@@ -639,7 +640,8 @@ public class DeckTask extends
 		return new TaskData(true);
 	}
 
-    private TaskData doInBackgroundSearchCards(TaskData... params) {
+    @SuppressWarnings("unchecked")
+	private TaskData doInBackgroundSearchCards(TaskData... params) {
         Log.i(AnkiDroidApp.TAG, "doInBackgroundSearchCards");
         Collection col = (Collection) params[0].getObjArray()[0];
         HashMap<String, String> deckNames = (HashMap<String, String>) params[0].getObjArray()[1];
@@ -999,7 +1001,7 @@ public class DeckTask extends
 			// }
 			// }
 			if (model == null) {
-				model = col.getModels().addBasicModel(col, title);
+				model = Models.addBasicModel(col, title);
 			}
 			model.put("did", did);
 			String[] questions = res.getStringArray(R.array.tutorial_questions);
