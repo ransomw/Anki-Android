@@ -476,7 +476,8 @@ public class DeckTask extends
 			return null;
 		}
 		try {
-			return new TaskData(col.getSched().deckCounts());
+			Sched.DeckCounts dc = col.getSched().getDeckCounts();
+			return new TaskData(new Object[] { dc.getDecksNet(), dc.eta, dc.cardCount });
 		} catch (RuntimeException e) {
 			Log.e(AnkiDroidApp.TAG, "doInBackgroundLoadDeckCounts - error: "
 					+ e);
@@ -1227,7 +1228,7 @@ public class DeckTask extends
 		public TaskData(List<Long> idList) {
 		    mIdList = idList;
 		}
-
+		
 		public ArrayList<HashMap<String, String>> getCards() {
 			return mCards;
 		}

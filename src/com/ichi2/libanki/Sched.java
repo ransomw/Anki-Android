@@ -463,7 +463,7 @@ public class Sched {
      */
 
     /** LIBANKI: not in libanki */
-    public Object[] deckCounts() {
+    public DeckCounts getDeckCounts() {
         TreeSet<Object[]> decks = deckDueTree(0);
         int[] counts = new int[] { 0, 0, 0 };
         for (Object[] deck : decks) {
@@ -496,7 +496,7 @@ public class Sched {
 				throw new RuntimeException(e);
 			}
         }
-        return new Object[] { decksNet, eta(counts), mCol.cardCount() };
+        return new DeckCounts(decksNet, eta(counts), mCol.cardCount());
     }
 
     public boolean getSpreadRev() {
@@ -2410,7 +2410,7 @@ public class Sched {
         		mCachedDeckCounts.clear();
         		if (counts == null) {
         			// reload counts
-        			counts = (TreeSet<Object[]>)deckCounts()[0];
+        			counts = getDeckCounts().getDecksNet();
         		}
             	for (Object[] d : counts) {
             		int done = 0;
@@ -2769,6 +2769,22 @@ public class Sched {
     // Needed for tests
     public LinkedList<long[]> getNewQueue() {
         return mNewQueue;
+    }
+    
+    public class DeckCounts {
+    	private TreeSet<Object[]> decksNet;
+		public final int eta;
+		public final int cardCount;
+
+		public DeckCounts(TreeSet<Object[]> decksNet, int eta, int cardCount) {
+			this.decksNet = decksNet;
+			this.eta = eta;
+			this.cardCount = cardCount;
+		}
+		
+		public TreeSet<Object[]> getDecksNet() {
+			return decksNet;
+		}
     }
 
     private class DeckNameCompare implements Comparator<Object[]> {

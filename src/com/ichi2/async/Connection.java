@@ -672,9 +672,9 @@ public class Connection extends AsyncTask<Connection.Payload, Object, Connection
                     counts[2] += (Integer) deck[4];
                 }
             }
-            Object[] dc = col.getSched().deckCounts();
-            data.result = dc[0];
-            data.data = new Object[] { conflictResolution, col, dc[1], dc[2], mediaError };
+            Sched.DeckCounts dc = col.getSched().getDeckCounts();
+            data.result = dc.getDecksNet();
+            data.data = new Object[] { conflictResolution, col, dc.eta, dc.cardCount, mediaError };
             return data;
         }
     }
