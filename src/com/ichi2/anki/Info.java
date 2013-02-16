@@ -623,11 +623,11 @@ public class Info extends Activity {
     }
 
     private void downloadCollection() {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        String hkey = preferences.getString("hkey", "");
-        if (hkey.length() == 0) {
+        if (! MyAccount.isLoggedIn()) {
             showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
         } else {
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+            String hkey = preferences.getString("hkey", "");
             Connection.sync(mSyncListener, new Connection.Payload(new Object[]{
                     hkey, preferences.getBoolean("syncFetchesMedia", true), "download", 0}));
         }

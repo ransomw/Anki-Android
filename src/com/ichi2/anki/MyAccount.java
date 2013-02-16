@@ -64,6 +64,8 @@ public class MyAccount extends AnkiActivity {
     private StyledDialog mRegisterAlert;
     private StyledDialog mErrorAlert;
 
+    private static boolean loggedIn = false;
+    private static String password = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,8 @@ public class MyAccount extends AnkiActivity {
         initAllAlertDialogs();
 
         SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        if (preferences.getString("hkey", "").length() > 0) {
+        password = preferences.getString("hkey", "");
+        if (password.length() > 0) {
             String username = preferences.getString("username", "");
             mUsernameLoggedIn.setText(username);
             setContentView(mLoggedIntoMyAccountView);
@@ -84,6 +87,9 @@ public class MyAccount extends AnkiActivity {
 
     }
 
+    protected static boolean isLoggedIn() {
+        return loggedIn;
+    }
 
     // Commented awaiting the resolution of the next issue: http://code.google.com/p/anki/issues/detail?id=1932
     // private boolean isUsernameAndPasswordValid(String username, String password) {
@@ -106,6 +112,7 @@ public class MyAccount extends AnkiActivity {
         Editor editor = preferences.edit();
         editor.putString("username", username);
         editor.putString("hkey", hkey);
+        loggedIn = true;
         editor.commit();
     }
 
@@ -153,6 +160,7 @@ public class MyAccount extends AnkiActivity {
         Editor editor = preferences.edit();
         editor.putString("username", "");
         editor.putString("hkey", "");
+        loggedIn = false;
         editor.commit();
 
         setContentView(mLoginToMyAccountView);

@@ -2271,11 +2271,11 @@ public class DeckPicker extends FragmentActivity {
      *            syncing was required.
      */
     private void sync(String syncConflictResolution, int syncMediaUsn) {
-        SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-        String hkey = preferences.getString("hkey", "");
-        if (hkey.length() == 0) {
+        if (MyAccount.isLoggedIn()) {
             showDialog(DIALOG_USER_NOT_LOGGED_IN_SYNC);
         } else {
+            SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
+            String hkey = preferences.getString("hkey", "");
             Connection.sync(mSyncListener, new Connection.Payload(new Object[] { hkey, 
                     preferences.getBoolean("syncFetchesMedia", true),
                     syncConflictResolution, syncMediaUsn }));
@@ -2546,9 +2546,7 @@ public class DeckPicker extends FragmentActivity {
 
             case MENU_ADD_SHARED_DECK:
                 if (AnkiDroidApp.getCol() != null) {
-                    SharedPreferences preferences = AnkiDroidApp.getSharedPrefs(getBaseContext());
-                    String hkey = preferences.getString("hkey", "");
-                    if (hkey.length() == 0) {
+                    if (MyAccount.isLoggedIn()) {
                         showDialog(DIALOG_USER_NOT_LOGGED_IN_ADD_SHARED_DECK);
                     } else {
                         addSharedDeck();
