@@ -129,6 +129,7 @@ public class StudyOptionsFragment extends Fragment {
      */
     private View mStudyOptionsView;
     private Button mButtonStart;
+    private Button mButtonCustomStudy;
     private Button mFragmentedCram;
 //    private Button mButtonUp;
 //    private Button mButtonDown;
@@ -198,6 +199,9 @@ public class StudyOptionsFragment extends Fragment {
                 case R.id.studyoptions_start:
                     openReviewer();
                     return;
+                case R.id.studyoptions_custom:
+                	showDialog(DIALOG_CUSTOM_STUDY);
+                	return;
 //                case R.id.studyoptions_limitup:
 //                    timeLimit = (mCol.getTimeLimit() / 60);
 //                    mCol.setTimeLimit((timeLimit + 1) * 60);
@@ -587,6 +591,7 @@ public class StudyOptionsFragment extends Fragment {
         mTextDeckName = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_name);
         mTextDeckDescription = (TextView) mStudyOptionsView.findViewById(R.id.studyoptions_deck_description);
         mButtonStart = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_start);
+        mButtonCustomStudy = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_custom);
 //        mButtonUp = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_limitup);
 //        mButtonDown = (Button) mStudyOptionsView.findViewById(R.id.studyoptions_limitdown);
 //        mToggleLimitToggle = (ToggleButton) mStudyOptionsView.findViewById(R.id.studyoptions_limittoggle);
@@ -652,6 +657,7 @@ public class StudyOptionsFragment extends Fragment {
         mDeckChart = (LinearLayout) mStudyOptionsView.findViewById(R.id.studyoptions_chart);
 
         mButtonStart.setOnClickListener(mButtonClickListener);
+        mButtonCustomStudy.setOnClickListener(mButtonClickListener);
 //        mButtonUp.setOnClickListener(mButtonClickListener);
 //        mButtonDown.setOnClickListener(mButtonClickListener);
 //        mToggleLimitToggle.setOnClickListener(mButtonClickListener);
